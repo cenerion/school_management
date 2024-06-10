@@ -1,15 +1,11 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
 from django.forms import BaseModelForm
 from django.views.generic import ListView, CreateView, UpdateView
 from django.forms.widgets import DateInput
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 
 from main.models import Uczen
 
-
-def index(request:HttpRequest) -> HttpResponse:
-    return HttpResponse("hi")
 
 class UczniowieListView(ListView):
     model=Uczen
