@@ -1,10 +1,10 @@
 from django.urls import path
 
-from main import views
+from main.views import main, students
 
 urlpatterns = [
-    path("", views.index, name="index"),
-    path("uczniowie/list", views.UczniowieListView.as_view(), name='uczniowie'),
-    path('uczniowie/create', views.UcznCreateView.as_view(), name='create ucz'),
-    path('uczniowie/update/<pk>', views.UczniowieUpdate.as_view(), name='ucz update'),
+    path("", main.index, name="index"),
+    path("student/list", students.StudentListView.as_view(), name='student list'),
+    path('student/create', students.StudentCreateView.as_view(), name='student create'),
+    path('student/update/<pk>', students.StudentUpdate.as_view(), name='student update'),
 ]

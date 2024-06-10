@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Student list{% endblock %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Birth date</th>
+        <th>Gender</th>
+        <th>Class</th>
+        <th>Address</th>
+        <th colspan="2">Options</th>
+    </tr>
+{% for stud in students %}
+    <tr>
+        <td>{{stud.first_name}}</td>
+        <td>{{stud.last_name}}</td>
+        <td>{{stud.birth_date}}</td>
+        <td>{{stud.gender}}</td>
+        <td>{{stud.sclass}}</td>
+        <td>{{stud.address}}</td>
+        <td><a href="{% url 'student update' pk=stud.id %}">Edytuj</a></td>
+        <td><a href="">e</a></td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}

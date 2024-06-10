@@ -7,39 +7,36 @@ GENDER_CHOICES = {
 }
 
 
-class Nauczyciel(models.Model):
-    imie = models.CharField(max_length=50, null=False)
-    nazwisko = models.CharField(max_length=100, null=False)
-    data_ur = models.DateField()
-    plec = models.CharField(max_length=1, choices=GENDER_CHOICES)
+class Teacher(models.Model):
+    first_name = models.CharField(max_length=50, null=False)
+    last_name = models.CharField(max_length=100, null=False)
+    birth_date = models.DateField()
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 
 
-class Klasa(models.Model):
-    profil = models.CharField(max_length=50, null=False)
-    wychowawca = models.ForeignKey(Nauczyciel, on_delete=models.PROTECT)
+class SClass(models.Model):
+    profile = models.CharField(max_length=50, null=False)
+    teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT)
     symbol = models.CharField(max_length=5, null=False)
 
 
-class Uczen(models.Model):
-    imie = models.CharField(max_length=50, null=False)
-    nazwisko = models.CharField(max_length=100, null=False)
-    data_ur = models.DateField()
-    plec = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    klasa = models.ForeignKey(Klasa, on_delete=models.PROTECT, null=True, blank=True)
-    adres_zam = models.CharField(max_length=255)
-
-    def get_fields():
-        return [field.name for field in Uczen._meta.fields]
+class Student(models.Model):
+    first_name = models.CharField(max_length=50, null=False)
+    last_name = models.CharField(max_length=100, null=False)
+    birth_date = models.DateField()
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    sclass = models.ForeignKey(SClass, on_delete=models.PROTECT, null=True, blank=True)
+    address = models.CharField(max_length=255)
 
 
-class Przedmiot(models.Model):
-    nazwa = models.CharField(max_length=50, null=False)
+class Subject(models.Model):
+    name = models.CharField(max_length=50, null=False)
 
 
-class Ocena(models.Model):
-    uczen = models.ForeignKey(Uczen, on_delete=models.PROTECT)
-    nauczyciel = models.ForeignKey(Nauczyciel, on_delete=models.PROTECT)
-    przedmiot = models.ForeignKey(Przedmiot, on_delete=models.PROTECT)
-    wartosc = models.FloatField()
-    nazwa = models.CharField(max_length=50, null=False)
-    data_wyst = models.DateField(max_length=255)
+class Grade(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.PROTECT)
+    teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT)
+    subject = models.ForeignKey(Subject, on_delete=models.PROTECT)
+    value = models.FloatField()
+    name = models.CharField(max_length=50, null=False)
+    date = models.DateField()
