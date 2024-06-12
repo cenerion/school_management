@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Update subject details{% endblock %}
+
+{% block content %}
+<a href="{% url 'subject list' %}">Return</a>
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
+{% endblock %}
