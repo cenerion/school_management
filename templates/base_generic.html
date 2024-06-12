@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}School{% endblock %}</title>
+    {% block head %}{% endblock %}
 </head>
 <body>
-{% block content %}{% endblock %}
+    <nav>
+        <ul>
+            <li><a href="{% url 'student list' %}">Students</a></li>
+            <li><a href="{% url 'teacher list' %}">Teachers</a></li>
+            <li><a href="{% url 'class list' %}">Classes</a></li>
+        </ul>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 </body>
 </html>
