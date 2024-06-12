@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Update teacher details{% endblock %}
+
+{% block content %}
+<a href="{% url 'teacher list' %}">Return</a>
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
+{% endblock %}

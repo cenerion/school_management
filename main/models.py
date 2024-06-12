@@ -13,11 +13,17 @@ class Teacher(models.Model):
     birth_date = models.DateField()
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 
+    def __str__(self):
+        return str(self.first_name) + ' ' + str(self.last_name)
+
 
 class SClass(models.Model):
     profile = models.CharField(max_length=50, null=False)
     teacher = models.ForeignKey(Teacher, on_delete=models.PROTECT)
     symbol = models.CharField(max_length=5, null=False)
+
+    def __str__(self):
+        return str(self.symbol) + " " + str(self.profile)
 
 
 class Student(models.Model):
@@ -32,6 +38,9 @@ class Student(models.Model):
 class Subject(models.Model):
     name = models.CharField(max_length=50, null=False)
 
+    def __str__(self):
+        return str(self.name)
+
 
 class Grade(models.Model):
     student = models.ForeignKey(Student, on_delete=models.PROTECT)
@@ -40,3 +49,6 @@ class Grade(models.Model):
     value = models.FloatField()
     name = models.CharField(max_length=50, null=False)
     date = models.DateField()
+
+    def __str__(self):
+        return str(self.value)

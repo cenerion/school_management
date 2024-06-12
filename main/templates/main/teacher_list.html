@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Student list{% endblock %}
+
+{% block content %}
+<a href="{% url 'teacher create' %}">Dodaj</a>
+<table>
+    <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Birth date</th>
+        <th>Gender</th>
+        <th colspan="2">Options</th>
+    </tr>
+{% for teach in teachers %}
+    <tr>
+        <td>{{teach.first_name}}</td>
+        <td>{{teach.last_name}}</td>
+        <td>{{teach.birth_date}}</td>
+        <td>{{teach.gender}}</td>
+        <td><a href="{% url 'teacher update' pk=teach.id %}">Edytuj</a></td>
+        <td><a href="">e</a></td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}
