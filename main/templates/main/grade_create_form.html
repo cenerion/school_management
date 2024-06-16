@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Add new grade{% endblock %}
+
+{% block content %}
+<a href="{% url 'grade list' %}">Return</a>
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
+{% endblock %}

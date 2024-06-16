@@ -34,6 +34,9 @@ class Student(models.Model):
     sclass = models.ForeignKey(SClass, on_delete=models.PROTECT, null=True, blank=True)
     address = models.CharField(max_length=255)
 
+    def __str__(self):
+        return str(self.first_name) + " " + str(self.last_name)
+
 
 class Subject(models.Model):
     name = models.CharField(max_length=50, null=False)

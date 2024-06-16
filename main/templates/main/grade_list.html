@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Grade list{% endblock %}
+
+{% block content %}
+<a href="{% url 'grade create' %}">Dodaj</a>
+<table>
+    <tr>
+        <th>Student</th>
+        <th>Subject</th>
+        <th>Teacher</th>
+        <th>Grade</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th colspan="2">Options</th>
+    </tr>
+{% for grade in grades %}
+    <tr>
+        <td>{{grade.student}}</td>
+        <td>{{grade.subject}}</td>
+        <td>{{grade.teacher}}</td>
+        <td>{{grade.value}}</td>
+        <td>{{grade.name}}</td>
+        <td>{{grade.date}}</td>
+        <td><a href="{% url 'grade update' pk=grade.id %}">Edytuj</a></td>
+        <td><a href="">e</a></td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}
