@@ -23,4 +23,6 @@ urlpatterns = [
     path("grade/list", grades.GradeListView.as_view(), name='grade list'),
     path('grade/create', grades.GradeCreateView.as_view(), name='grade create'),
     path('grade/update/<pk>', grades.GradeUpdate.as_view(), name='grade update'),
+    
+    path('class/<pk>/students', students.StudentsSpecificClassView.as_view(), name='class student list'),
 ]

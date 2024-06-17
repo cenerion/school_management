@@ -1,4 +1,6 @@
+from django.db.models.query import QuerySet
 from django.forms import BaseModelForm
+from django.http import HttpRequest, HttpResponse
 from django.views.generic import ListView, CreateView, UpdateView
 from django.forms.widgets import DateInput
 from django.urls import reverse_lazy
@@ -10,6 +12,32 @@ class StudentListView(ListView):
     model=Student
     context_object_name = 'students'
 
+
+class StudentsSpecificClassView(ListView):
+    model=Student
+    context_object_name = 'students'
+
+    def get_queryset(self) -> QuerySet[any]:
+        queryset = super().get_queryset()
+
+        pk = self.kwargs.get('pk')
+        if pk is not None:
+            queryset = queryset.filter(sclass=pk)
+
+        if pk is None:
+            raise AttributeError(
+                "Generic detail view %s must be called with either an object "
+                "pk or a slug in the URLconf." % self.__class__.__name__
+            )
+
+        ordering = self.get_ordering()
+        if ordering:
+            if isinstance(ordering, str):
+                ordering = (ordering,)
+            queryset = queryset.order_by(*ordering)
+
+        return queryset
+    
     
 class StudentCreateView(CreateView):
     model = Student
