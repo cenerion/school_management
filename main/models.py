@@ -1,10 +1,41 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 GENDER_CHOICES = {
-        'M': 'Male',
-        'F': 'Female',
+    'M': 'Male',
+    'F': 'Female',
 }
+
+
+class UserConnect(models.Model):
+    NONE = 0
+    ADMIN = 1
+    STUD = 2
+    TEACH = 3
+
+    USER_TYPE = {
+        NONE: 'None',
+        ADMIN: 'Administration',
+        STUD: 'Student',
+        TEACH: 'Teacher',
+    }
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=False)
+    utype = models.IntegerField(choices=USER_TYPE, default=NONE, null=False)
+    other_id = models.BigIntegerField()
+
+    def __str__(self) -> str:
+        ret: str = f'{self.user} {self.utype} '
+
+        if self.utype is self.STUD:
+            stud = Student.objects.get(pk=self.other_id)
+            ret += f'{stud}'
+        elif self.utype is self.TEACH:
+            teach = Teacher.objects.get(pk=self.other_id)
+            ret += f'{teach}'
+
+        return ret
 
 
 class Teacher(models.Model):
