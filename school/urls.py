@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('teacher/', include(('teachers_site.urls', 'teachers_site'), namespace='teacher')),
+    path('student/', include(('students_site.urls', 'students_site'), namespace='student')),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', include('main.urls')),
 ]
