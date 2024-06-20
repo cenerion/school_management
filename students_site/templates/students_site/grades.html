@@ -1,0 +1,9 @@
+
+<a href="{% url 'student:main' %}">Return</a>
+<table>
+    {% for grade in grades %}
+    <tr>
+        <td>{{ grade }}</td>
+    </tr>
+    {% endfor %}
+</table>

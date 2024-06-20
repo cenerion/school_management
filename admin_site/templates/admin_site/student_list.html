@@ -3,7 +3,8 @@
 {% block title %}Student list{% endblock %}
 
 {% block content %}
-<a href="{% url 'student create' %}">Dodaj</a>
+<a href="{% url 'administrator:class list'%}">Return</a>
+<a href="{% url 'administrator:student new' c_pk=c_pk %}">Add new Student</a>
 <table>
     <tr>
         <th>First name</th>
@@ -22,8 +23,8 @@
         <td>{{stud.gender}}</td>
         <td>{{stud.sclass}}</td>
         <td>{{stud.address}}</td>
-        <td><a href="{% url 'student update' pk=stud.id %}">Edytuj</a></td>
-        <td><a href="">e</a></td>
+        <td><a href="{% url 'administrator:student mod' pk=stud.id c_pk=c_pk %}">Edit</a></td>
+        <td><a href="{% url 'administrator:student del' pk=stud.id c_pk=c_pk %}">Delete</a></td>
     </tr>
 {% endfor %}
 </table>

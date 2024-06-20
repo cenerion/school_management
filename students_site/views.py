@@ -1,10 +1,11 @@
+from typing import Any
 from django.shortcuts import render, HttpResponse
 from django.views import View
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import AccessMixin
 from django.db.models.query import QuerySet
 
-from main.models import Student, UserConnect, Grade
+from main.models import Student, UserConnect, Grade, SClass
 
 
 class StudentGenericMixin(AccessMixin):
@@ -28,13 +29,13 @@ class StudentGenericMixin(AccessMixin):
 
 class MainView(StudentGenericMixin, View):
     def get(self, request):
-        #return HttpResponse("Student main view")
         return render(request, 'students_site/main.html', None)
     
 
 class GradeListView(StudentGenericMixin, ListView):
     model=Grade
     context_object_name = 'grades'
+    template_name = 'students_site/grades.html'
 
     def get_queryset(self) -> QuerySet[Grade]:
         queryset = super().get_queryset()
@@ -45,7 +46,13 @@ class GradeListView(StudentGenericMixin, ListView):
 
 class ClassStudentListView(StudentGenericMixin, ListView):
     model=Student
-    context_object_name = 'grades'
+    context_object_name = 'students'
+    template_name = 'students_site/class.html'
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['class'] = self.student.sclass
+        return context
 
     def get_queryset(self) -> QuerySet[Student]:
         queryset = super().get_queryset()

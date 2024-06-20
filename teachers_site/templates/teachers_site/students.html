@@ -1,0 +1,10 @@
+
+<a href="{% url 'teacher:class list' %}">Return</a>
+<table>
+    {% for stud in students %}
+    <tr>
+        <td>{{ stud }}</td>
+        <td><a href="{% url "teacher:grade list" pk=stud.pk %}">Grades</a></td>
+    </tr>
+    {% endfor %}
+</table>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'main',
     'students_site',
     'teachers_site',
+    'admin_site',
 ]
 
 MIDDLEWARE = [

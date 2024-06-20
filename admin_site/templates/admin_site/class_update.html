@@ -1,9 +1,9 @@
 {% extends "base_generic.html" %}
 
-{% block title %}Update student details{% endblock %}
+{% block title %}Create new class{% endblock %}
 
 {% block content %}
-<a href="{% url 'student list' %}">Return</a>
+<a href="{% url 'administrator:class list' %}">Return</a>
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save">

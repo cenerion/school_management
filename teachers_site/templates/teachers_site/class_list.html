@@ -1,0 +1,9 @@
+
+<table>
+{% for class in class_list %}
+<tr>
+    <td>{{ class }}</td>
+    <td><a href="{% url "teacher:student list" pk=class.pk %}">View Students</a></td>
+</tr>
+{% endfor %}
+</table>

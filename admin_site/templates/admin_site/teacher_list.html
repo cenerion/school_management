@@ -1,9 +1,10 @@
 {% extends "base_generic.html" %}
 
-{% block title %}Student list{% endblock %}
+{% block title %}Teacher list{% endblock %}
 
 {% block content %}
-<a href="{% url 'teacher create' %}">Dodaj</a>
+<a href="{% url 'administrator:main' %}">Return</a>
+<a href="{% url 'administrator:teacher new' %}">Add teacher</a>
 <table>
     <tr>
         <th>First name</th>
@@ -12,14 +13,14 @@
         <th>Gender</th>
         <th colspan="2">Options</th>
     </tr>
-{% for teach in teachers %}
+{% for teach in teacher_list %}
     <tr>
         <td>{{teach.first_name}}</td>
         <td>{{teach.last_name}}</td>
         <td>{{teach.birth_date}}</td>
         <td>{{teach.gender}}</td>
-        <td><a href="{% url 'teacher update' pk=teach.id %}">Edytuj</a></td>
-        <td><a href="">e</a></td>
+        <td><a href="{% url 'administrator:teacher mod' pk=teach.id %}">Edit</a></td>
+        <td><a href="{% url 'administrator:teacher del' pk=teach.id %}">Delete</a></td>
     </tr>
 {% endfor %}
 </table>

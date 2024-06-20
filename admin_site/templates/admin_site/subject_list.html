@@ -3,7 +3,8 @@
 {% block title %}Subject list{% endblock %}
 
 {% block content %}
-<a href="{% url 'subject create' %}">Dodaj</a>
+<a href="{% url 'administrator:main' %}">Return</a>
+<a href="{% url 'administrator:subject new' %}">Add new subject</a>
 <table>
     <tr>
         <th>Name</th>
@@ -12,8 +13,8 @@
 {% for subj in subject_list %}
     <tr>
         <td>{{subj.name}}</td>
-        <td><a href="{% url 'subject update' pk=subj.id %}">Edytuj</a></td>
-        <td><a href="">e</a></td>
+        <td><a href="{% url 'administrator:subject mod' pk=subj.id %}">Edit</a></td>
+        <td><a href="{% url 'administrator:subject del' pk=subj.id %}">Delete</a></td>
     </tr>
 {% endfor %}
 </table>

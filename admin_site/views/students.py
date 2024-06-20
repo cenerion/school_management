@@ -1,25 +1,22 @@
+from typing import Any
 from django.db.models.query import QuerySet
 from django.forms import BaseModelForm
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.views.generic.edit import FormMixin
 from django.forms.widgets import DateInput
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 
+from admin_site.views.main import AdminGenericMixin
 from main.models import Student, UserConnect
-
-
-class StudentListView(ListView):
-    model=Student
-    context_object_name = 'students'
-
 
 class StudentsSpecificClassView(ListView):
     model=Student
+    template_name = 'admin_site/student_list.html'
     context_object_name = 'students'
 
-    def get_queryset(self) -> QuerySet[any]:
+    def get_queryset(self) -> QuerySet[Any]:
         queryset = super().get_queryset()
 
         pk = self.kwargs.get('pk')
@@ -40,12 +37,16 @@ class StudentsSpecificClassView(ListView):
 
         return queryset
 
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["c_pk"] = self.kwargs.get('pk')
+        return context
+    
 
 class StudentCreateView(CreateView):
     model = Student
-    template_name_suffix = '_create_form'
+    template_name = 'admin_site/student_create.html'
     fields = '__all__'
-    success_url = reverse_lazy('student list')
 
     def get_form(self, form_class: type[BaseModelForm] | None = None) -> BaseModelForm:
         form = super().get_form(form_class)
@@ -70,15 +71,53 @@ class StudentCreateView(CreateView):
         UserConnect.objects.create(user=user, utype=UserConnect.STUD, other_id=self.object.pk)
         return HttpResponseRedirect(self.get_success_url())
 
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["c_pk"] = self.kwargs.get('c_pk')
+        return context
+    
+    def get_success_url(self) -> str:
+        return reverse_lazy('administrator:student list', kwargs={'pk':  self.object.sclass.pk})
+    
 
-class StudentUpdate(UpdateView):
+class StudentUpdateView(UpdateView):
     model = Student
-    template_name_suffix = '_update_form'
+    template_name = 'admin_site/student_update.html'
     fields = '__all__'
-    success_url = reverse_lazy('student list')
 
     def get_form(self, form_class: BaseModelForm | None = None) -> BaseModelForm:
         form = super().get_form(form_class)
         form.fields['birth_date'].widget = DateInput(attrs={'type':'date'})
         return form
     
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["c_pk"] = self.kwargs.get('c_pk')
+        return context
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('administrator:student list', kwargs={'pk':  self.object.sclass.pk})
+    
+
+class StudentDeleteView(DeleteView):
+    model = Student
+    template_name = 'admin_site/student_delete.html'
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["c_pk"] = self.kwargs.get('c_pk')
+        return context
+    
+    def form_valid(self, form):
+        #self.c_pk = self.object.sclass.pk
+        pk = self.object.pk
+        try:
+            connector = UserConnect.objects.filter(utype=UserConnect.STUD).get(other_id=pk)
+            connector.user.delete()
+        except UserConnect.DoesNotExist:
+            pass
+        finally:
+            return super().form_valid(form)
+        
+    def get_success_url(self) -> str:
+        return reverse_lazy('administrator:student list', kwargs={'pk':  self.kwargs.get('c_pk')})

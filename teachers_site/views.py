@@ -33,17 +33,20 @@ class TeacherGenericMixin(AccessMixin):
 
 class TeacherMainView(TeacherGenericMixin, View):
     def get(self, request):
+        return HttpResponseRedirect(reverse_lazy('teacher:class list'))
         return HttpResponse("main view")
     
 
 class ClassListView(TeacherGenericMixin, ListView):
     model=SClass
     context_object_name = 'class_list'
+    template_name = 'teachers_site/class_list.html'
 
 
 class ClassStudentListView(TeacherGenericMixin, ListView):
     model=Student
     context_object_name = 'students'
+    template_name = 'teachers_site/students.html'
 
     def get_queryset(self) -> QuerySet[Student]:
         queryset = super().get_queryset()
@@ -69,6 +72,12 @@ class ClassStudentListView(TeacherGenericMixin, ListView):
 class StudentGradesListview(TeacherGenericMixin, ListView):
     model=Grade
     context_object_name = 'grades'
+    template_name = 'teachers_site/grades.html'
+
+    def get_context_data(self, **kwargs) -> dict[str, any]:
+        context = super().get_context_data(**kwargs)
+        context['s_pk'] = self.kwargs.get('pk')
+        return context
 
     def get_queryset(self) -> QuerySet[Grade]:
         queryset = super().get_queryset()
@@ -84,14 +93,18 @@ class StudentGradesListview(TeacherGenericMixin, ListView):
 
         queryset = queryset.order_by('date', 'subject')
         return queryset
-    
+
 
 class AddGradeView(TeacherGenericMixin, CreateView):
     model = Grade
-    #template_name = 'add_grade'
+    template_name = 'teachers_site/form.html'
     template_name_suffix = '_create_form'
     fields = ['subject', 'value', 'name', 'date']
-    #success_url = reverse_lazy('grade list')
+
+    def get_context_data(self, **kwargs) -> dict[str, any]:
+        context = super().get_context_data(**kwargs)
+        context['s_pk'] = self.kwargs.get('pk')
+        return context
 
     def get_form(self, form_class: type[BaseModelForm] | None = None) -> BaseModelForm:
         form = super().get_form(form_class)
@@ -104,16 +117,22 @@ class AddGradeView(TeacherGenericMixin, CreateView):
         con = UserConnect.objects.get(user=self.request.user.pk)
         self.object.teacher = Teacher.objects.get(pk=con.other_id)
         self.object.save()
-        #return super(FormMixin, self).form_valid(form)
         return HttpResponseRedirect(self.get_success_url())
+    
+    def get_success_url(self) -> str:
+        return reverse_lazy('teacher:grade list', kwargs={'pk': self.kwargs.get('pk')})
 
 
 class ModifyGradeView(TeacherGenericMixin, UpdateView):
     model = Grade
-    #template_name = 'modify_grade'
+    template_name = 'teachers_site/form.html'
     template_name_suffix = '_create_form'
     fields = ['subject', 'value', 'name', 'date']
-    #success_url = reverse_lazy('grade list')
+
+    def get_context_data(self, **kwargs) -> dict[str, any]:
+        context = super().get_context_data(**kwargs)
+        context['s_pk'] = self.kwargs.get('s_pk')
+        return context
 
     def get_form(self, form_class: type[BaseModelForm] | None = None) -> BaseModelForm:
         form = super().get_form(form_class)
@@ -121,5 +140,4 @@ class ModifyGradeView(TeacherGenericMixin, UpdateView):
         return form
 
     def get_success_url(self) -> str:
-        return super().get_success_url()
-
+        return reverse_lazy('teacher:grade list', kwargs={'pk':  self.kwargs.get('s_pk')})

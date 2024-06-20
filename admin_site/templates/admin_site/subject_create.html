@@ -3,7 +3,7 @@
 {% block title %}Create new subject{% endblock %}
 
 {% block content %}
-<a href="{% url 'subject list' %}">Return</a>
+<a href="{% url 'administrator:subject list' %}">Return</a>
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Save">

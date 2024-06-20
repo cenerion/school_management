@@ -7,5 +7,5 @@ urlpatterns = [
     path('class/<pk>', views.ClassStudentListView.as_view(), name='student list'),
     path('student/<pk>', views.StudentGradesListview.as_view(), name='grade list'),
     path('student/<pk>/grade/new', views.AddGradeView.as_view(), name='grade new'),
-    path('student/<int:spk>/grade/<pk>', views.ModifyGradeView.as_view(), name='grade mod'),
+    path('student/<int:s_pk>/grade/<pk>', views.ModifyGradeView.as_view(), name='grade mod'),
 ]
