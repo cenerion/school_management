@@ -1,9 +1,20 @@
 
 <a href="{% url 'student:main' %}">Return</a>
 <table>
+    <tr>
+        <th>Teacher</th>
+        <th>Subject</th>
+        <th>Value</th>
+        <th>Date</th>
+        <th>Name</th>
+    </tr>
     {% for grade in grades %}
     <tr>
-        <td>{{ grade }}</td>
+        <td>{{ grade.teacher }}</td>
+        <td>{{ grade.subject }}</td>
+        <td>{{ grade.value }}</td>
+        <td>{{ grade.date }}</td>
+        <td>{{ grade.name }}</td>
     </tr>
     {% endfor %}
 </table>

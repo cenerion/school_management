@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block title %}Student list{% endblock %}
+
+{% block content %}
+<a href="{% url 'administrator:student list' pk=c_pk %}">Return</a>
+<table>
+    <tr>
+        <th>login</th>
+        <th>pass</th>
+    </tr>
+    <tr>
+        <td>{{username}}</td>
+        <td>{{pass}}</td>
+    </tr>
+</table>
+{% endblock %}

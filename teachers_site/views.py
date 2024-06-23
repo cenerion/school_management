@@ -30,12 +30,14 @@ class TeacherGenericMixin(AccessMixin):
 
         return super().dispatch(request, *args, **kwargs)
 
+    def handle_no_permission(self) -> HttpResponseRedirect:
+        return HttpResponseRedirect(reverse_lazy('index'))
+
 
 class TeacherMainView(TeacherGenericMixin, View):
     def get(self, request):
         return HttpResponseRedirect(reverse_lazy('teacher:class list'))
-        return HttpResponse("main view")
-    
+
 
 class ClassListView(TeacherGenericMixin, ListView):
     model=SClass
@@ -77,6 +79,7 @@ class StudentGradesListview(TeacherGenericMixin, ListView):
     def get_context_data(self, **kwargs) -> dict[str, any]:
         context = super().get_context_data(**kwargs)
         context['s_pk'] = self.kwargs.get('pk')
+        context['c_pk'] = Student.objects.get(pk=self.kwargs.get('pk')).sclass.pk
         return context
 
     def get_queryset(self) -> QuerySet[Grade]:

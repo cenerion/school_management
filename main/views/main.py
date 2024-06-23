@@ -11,14 +11,9 @@ from main.models import Student, UserConnect, Grade, SClass
 
 
 class MainView(TemplateView):
-    def get_context_data(self, **kwargs) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context[''] = ''
-        return context
-    
     def get(self, request):
         if not self.request.user.is_authenticated:
-            return HttpResponseRedirect(reverse_lazy('')) #to login page
+            return HttpResponseRedirect(reverse_lazy('login')) #to login page
         
         connector: UserConnect
         try:
@@ -34,7 +29,7 @@ class MainView(TemplateView):
                 return HttpResponseRedirect(reverse_lazy('teacher:main')) #to teacher page
             
             case UserConnect.ADMIN:
-                return HttpResponseRedirect(reverse_lazy('')) #to admin page
+                return HttpResponseRedirect(reverse_lazy('administrator:main')) #to admin page
             
             case _:
                 return HttpResponseRedirect(reverse_lazy('')) # logout

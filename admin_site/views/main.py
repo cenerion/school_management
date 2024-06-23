@@ -8,7 +8,7 @@ from django.db.models.query import QuerySet
 from django.forms.widgets import DateInput
 from django.urls import reverse_lazy
 
-from main.models import UserConnect, Teacher, SClass, Student, Grade
+from main.models import UserConnect
 
 
 class AdminGenericMixin(AccessMixin):
@@ -29,6 +29,8 @@ class AdminGenericMixin(AccessMixin):
 
         return super().dispatch(request, *args, **kwargs)
 
+    def handle_no_permission(self) -> HttpResponseRedirect:
+        return HttpResponseRedirect(reverse_lazy('index'))
 
 class AdminMainView(TemplateView):
     template_name = 'admin_site/main.html'

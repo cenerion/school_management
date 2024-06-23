@@ -1,9 +1,13 @@
+from typing import Any
 from django.forms import BaseModelForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.forms.widgets import DateInput
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
+from django.utils.crypto import get_random_string
+from admin_site.apps import AdminSiteConfig
+from django.views.generic.base import TemplateView
 
 from main.models import Teacher, UserConnect
 from admin_site.views.main import AdminGenericMixin
@@ -43,6 +47,34 @@ class TeacherCreateView(CreateView):
         user = User.objects.create_user(self.create_username(), password=None)
         UserConnect.objects.create(user=user, utype=UserConnect.TEACH, other_id=self.object.pk)
         return HttpResponseRedirect(self.get_success_url())
+
+
+    def get_success_url(self) -> str:
+        return reverse_lazy('administrator:teacher cred', kwargs={'pk':  self.object.pk})
+    
+
+class TeacherCredentialsView(TemplateView):
+    template_name = 'admin_site/teacher_cred.html'
+
+    def generate_password(self):
+        pk = self.kwargs.get('pk')
+        connector = UserConnect.objects.get(other_id=pk)
+        user = connector.user
+
+        password = get_random_string(10, AdminSiteConfig.acceptable_password_chars)
+        user.set_password(password)
+
+        user.save()
+        return user.username, password
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        u, p = self.generate_password()
+        context['username'] = u
+        context["pass"] = p
+        return context
+    
+
 
 
 class TeacherUpdateView(UpdateView):

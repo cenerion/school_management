@@ -1,9 +1,10 @@
 from typing import Any
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import AccessMixin
 from django.db.models.query import QuerySet
+from django.urls import reverse_lazy
 
 from main.models import Student, UserConnect, Grade, SClass
 
@@ -25,6 +26,9 @@ class StudentGenericMixin(AccessMixin):
             return self.handle_no_permission()
 
         return super().dispatch(request, *args, **kwargs)
+
+    def handle_no_permission(self) -> HttpResponseRedirect:
+        return HttpResponseRedirect(reverse_lazy('index'))
 
 
 class MainView(StudentGenericMixin, View):
