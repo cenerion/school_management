@@ -3,10 +3,10 @@
 {% block title %}Delete teacher{% endblock %}
 
 {% block content %}
-<a href="{% url 'administrator:teacher list' %}">Return</a>
+<a href="{% url 'administrator:teacher list' %}" class="btn btn-danger" >Return</a>
 <form method="post">{% csrf_token %}
     <p>Are you sure you want to delete teacher "{{ object }}"?</p>
     {{ form }}
-    <input type="submit" value="Confirm">
+    <input type="submit" value="Confirm" class="btn btn-danger" >
 </form>
 {% endblock content %}

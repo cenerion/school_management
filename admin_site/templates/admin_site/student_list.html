@@ -3,8 +3,8 @@
 {% block title %}Student list{% endblock %}
 
 {% block content %}
-<a href="{% url 'administrator:class list'%}">Return</a>
-<a href="{% url 'administrator:student new' c_pk=c_pk %}">Add new Student</a>
+<a href="{% url 'administrator:class list'%}" class="btn btn-danger" >Return</a>
+<a href="{% url 'administrator:student new' c_pk=c_pk %}" class="btn btn-success">Add new Student</a>
 <table class="table">
     <thead>
         <tr>
@@ -26,9 +26,9 @@
             <td>{{stud.birth_date}}</td>
             <td>{{stud.address}}</td>
             <td>{{stud.sclass}}</td>
-            <td><a href="{% url 'administrator:student cred' pk=stud.id c_pk=c_pk %}">Generate new password</a></td>
-            <td><a href="{% url 'administrator:student mod' pk=stud.id c_pk=c_pk %}">Edit</a></td>
-            <td><a href="{% url 'administrator:student del' pk=stud.id c_pk=c_pk %}">Delete</a></td>
+            <td><a href="{% url 'administrator:student cred' pk=stud.id c_pk=c_pk %}" class="btn btn-warning">Generate new password</a></td>
+            <td><a href="{% url 'administrator:student mod' pk=stud.id c_pk=c_pk %}" class="btn btn-warning">Edit</a></td>
+            <td><a href="{% url 'administrator:student del' pk=stud.id c_pk=c_pk %}" class="btn btn-danger" >Delete</a></td>
         </tr>
     {% endfor %}
     </tbody>

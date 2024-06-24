@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Student main page</h1>
 <ul>
-    <li><a href="{% url "student:grade list" %}">My Grades</a></li>
-    <li><a href="{% url "student:class" %}">My Class</a></li>
+    <li><a href="{% url "student:grade list" %}" class="btn btn-primary">My Grades</a></li>
+    <li><a href="{% url "student:class" %}" class="btn btn-primary">My Class</a></li>
 </ul>
 {% endblock content %}

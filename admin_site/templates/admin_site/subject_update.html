@@ -3,9 +3,9 @@
 {% block title %}Update subject details{% endblock %}
 
 {% block content %}
-<a href="{% url 'administrator:subject list' %}">Return</a>
+<a href="{% url 'administrator:subject list' %}" class="btn btn-danger" >Return</a>
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Save">
+    <input type="submit" value="Save" class="btn btn-success">
 </form>
 {% endblock %}

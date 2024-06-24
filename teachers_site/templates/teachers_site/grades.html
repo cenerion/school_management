@@ -4,8 +4,8 @@
 
 {% block content %}
 <h1>Grades of {{ student.first_name }} {{ student.last_name }}</h1>
-<a href="{% url 'teacher:student list' pk=student.sclass.pk %}">Return</a>
-<a href="{% url 'teacher:grade new' pk=student.pk %}">Add Grade</a>
+<a href="{% url 'teacher:student list' pk=student.sclass.pk %}" class="btn btn-danger">Return</a>
+<a href="{% url 'teacher:grade new' pk=student.pk %}" class="btn btn-success">Add Grade</a>
 <table class="table">
     <thead>
         <tr>
@@ -25,7 +25,7 @@
             <td>{{ grade.date }}</td>
             <td>{{ grade.subject }}</td>
             <td>{{ grade.teacher }}</td>
-            <td><a href="{% url "teacher:grade mod" pk=grade.pk s_pk=grade.student.pk %}">change grade</a></td>
+            <td><a href="{% url "teacher:grade mod" pk=grade.pk s_pk=grade.student.pk %}" class="btn btn-warning">change grade</a></td>
         </tr>
         {% endfor %}
     </tbody>

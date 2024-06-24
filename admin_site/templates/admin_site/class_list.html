@@ -3,8 +3,8 @@
 {% block title %}Class list{% endblock %}
 
 {% block content %}
-<a href="{% url 'administrator:main' %}">Return</a>
-<a href="{% url 'administrator:class new' %}">Dodaj</a>
+<a href="{% url 'administrator:main' %}" class="btn btn-danger" >Return</a>
+<a href="{% url 'administrator:class new' %}" class="btn btn-success">Dodaj</a>
 <table class="table">
     <thead>
         <tr>
@@ -20,9 +20,9 @@
             <td>{{class.symbol}}</td>
             <td>{{class.profile}}</td>
             <td>{{class.teacher}}</td>
-            <td><a href="{% url 'administrator:student list' pk=class.id %}">Student list</a></td>
-            <td><a href="{% url 'administrator:class mod' pk=class.id %}">Edytuj</a></td>
-            <td><a href="{% url 'administrator:class del' pk=class.id %}">Delete</a></td>
+            <td><a href="{% url 'administrator:student list' pk=class.id %}" class="btn btn-primary">Student list</a></td>
+            <td><a href="{% url 'administrator:class mod' pk=class.id %}" class="btn btn-warning">Edytuj</a></td>
+            <td><a href="{% url 'administrator:class del' pk=class.id %}" class="btn btn-danger" >Delete</a></td>
         </tr>
     {% endfor %}
     </tbody>

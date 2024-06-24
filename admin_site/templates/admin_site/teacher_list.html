@@ -3,8 +3,8 @@
 {% block title %}Teacher list{% endblock %}
 
 {% block content %}
-<a href="{% url 'administrator:main' %}">Return</a>
-<a href="{% url 'administrator:teacher new' %}">Add teacher</a>
+<a href="{% url 'administrator:main' %}" class="btn btn-danger" >Return</a>
+<a href="{% url 'administrator:teacher new' %}" class="btn btn-success">Add teacher</a>
 <table class="table">
     <thead>
         <tr>
@@ -12,7 +12,7 @@
             <th>Last name</th>
             <th>Birth date</th>
             <th>Gender</th>
-            <th colspan="2">Options</th>
+            <th colspan="3">Options</th>
         </tr>
     </thead>
     <tbody>
@@ -22,9 +22,9 @@
             <td>{{teach.last_name}}</td>
             <td>{{teach.birth_date}}</td>
             <td>{{teach.gender}}</td>
-            <td><a href="{% url 'administrator:teacher cred' pk=teach.id %}">Generate new password</a></td>
-            <td><a href="{% url 'administrator:teacher mod' pk=teach.id %}">Edit</a></td>
-            <td><a href="{% url 'administrator:teacher del' pk=teach.id %}">Delete</a></td>
+            <td><a href="{% url 'administrator:teacher cred' pk=teach.id %}" class="btn btn-warning">Generate new password</a></td>
+            <td><a href="{% url 'administrator:teacher mod' pk=teach.id %}" class="btn btn-warning">Edit</a></td>
+            <td><a href="{% url 'administrator:teacher del' pk=teach.id %}" class="btn btn-danger" >Delete</a></td>
         </tr>
     {% endfor %}
     </tbody>

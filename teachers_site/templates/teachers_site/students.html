@@ -4,7 +4,7 @@
 
 {% block content %}
 <h1>Students from class {{class.symbol}}</h1>
-<a href="{% url 'teacher:class list' %}">Return</a>
+<a href="{% url 'teacher:class list' %}" class="btn btn-danger">Return</a>
 <table class="table">
     <thead>
         <tr>
@@ -24,7 +24,7 @@
             <td>{{ stud.gender }}</td>
             <td>{{ stud.birth_date }}</td>
             <td>{{ stud.address }}</td>
-            <td><a href="{% url "teacher:grade list" pk=stud.pk %}">Grades</a></td>
+            <td><a href="{% url "teacher:grade list" pk=stud.pk %}" class="btn btn-info">Grades</a></td>
         </tr>
         {% endfor %}
     </tbody>
