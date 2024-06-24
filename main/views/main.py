@@ -6,6 +6,7 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import AccessMixin
 from django.db.models.query import QuerySet
 from django.urls import reverse_lazy
+from django.contrib.auth import logout
 
 from main.models import Student, UserConnect, Grade, SClass
 
@@ -19,7 +20,8 @@ class MainView(TemplateView):
         try:
             connector = UserConnect.objects.get(user=self.request.user.id)
         except UserConnect.DoesNotExist:
-            return HttpResponseRedirect(reverse_lazy('')) # logout
+            logout(request)
+            return HttpResponseRedirect(reverse_lazy('index'))
         
         match connector.utype:
             case UserConnect.STUD:
@@ -32,4 +34,5 @@ class MainView(TemplateView):
                 return HttpResponseRedirect(reverse_lazy('administrator:main')) #to admin page
             
             case _:
-                return HttpResponseRedirect(reverse_lazy('')) # logout
+                logout(request)
+                return HttpResponseRedirect(reverse_lazy('index'))
