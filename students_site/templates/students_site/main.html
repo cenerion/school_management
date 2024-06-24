@@ -1,9 +1,11 @@
-<form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">logout</button>
-</form>
-<h1>Student main site</h1>
+{% extends "base.html" %}
+
+{% block title %}Student main page{% endblock title %}
+
+{% block content %}
+<h1>Student main page</h1>
 <ul>
     <li><a href="{% url "student:grade list" %}">My Grades</a></li>
     <li><a href="{% url "student:class" %}">My Class</a></li>
 </ul>
+{% endblock content %}

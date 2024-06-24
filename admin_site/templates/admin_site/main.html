@@ -1,13 +1,9 @@
-{% extends "base_generic.html" %}
+{% extends "base.html" %}
 
-{% block title %}Administrator main site{% endblock title %}
+{% block title %}Administrator main page{% endblock title %}
 
 {% block content %}
-<form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">logout</button>
-</form>
-<h1>Administrator Site</h1>
+<h1>Administrator main page</h1>
 <ul>
     <li><a href="{% url "administrator:teacher list" %}">Teacher List</a></li>
     <li><a href="{% url "administrator:class list" %}">Class List</a></li>

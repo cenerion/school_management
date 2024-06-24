@@ -1,26 +1,30 @@
-{% extends "base_generic.html" %}
+{% extends "base.html" %}
 
 {% block title %}Class list{% endblock %}
 
 {% block content %}
 <a href="{% url 'administrator:main' %}">Return</a>
 <a href="{% url 'administrator:class new' %}">Dodaj</a>
-<table>
-    <tr>
-        <th>Symbol</th>
-        <th>Profile</th>
-        <th>Teacher</th>
-        <th colspan="3">Options</th>
-    </tr>
-{% for class in class_list %}
-    <tr>
-        <td>{{class.symbol}}</td>
-        <td>{{class.profile}}</td>
-        <td>{{class.teacher}}</td>
-        <td><a href="{% url 'administrator:student list' pk=class.id %}">Student list</a></td>
-        <td><a href="{% url 'administrator:class mod' pk=class.id %}">Edytuj</a></td>
-        <td><a href="{% url 'administrator:class del' pk=class.id %}">Delete</a></td>
-    </tr>
-{% endfor %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Symbol</th>
+            <th>Profile</th>
+            <th>Teacher</th>
+            <th colspan="3">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for class in class_list %}
+        <tr>
+            <td>{{class.symbol}}</td>
+            <td>{{class.profile}}</td>
+            <td>{{class.teacher}}</td>
+            <td><a href="{% url 'administrator:student list' pk=class.id %}">Student list</a></td>
+            <td><a href="{% url 'administrator:class mod' pk=class.id %}">Edytuj</a></td>
+            <td><a href="{% url 'administrator:class del' pk=class.id %}">Delete</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

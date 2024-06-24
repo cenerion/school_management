@@ -8,13 +8,19 @@ from django.db.models.query import QuerySet
 from django.urls import reverse_lazy
 
 from main.models import Student, UserConnect, Grade, SClass
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib import auth
 
-class MyLoginView(LoginView):
+class LoginView(auth.views.LoginView):
     redirect_authenticated_user=True
     def get_success_url(self) -> str:
         return reverse_lazy('index')
 
-class MyLogoutView(LogoutView):
+class LogoutView(auth.views.LoginView):
     def get_success_url(self) -> str:
         return reverse_lazy('index')
+
+class PasswordChangeView(auth.views.PasswordChangeView):
+    ...
+
+class PasswordChangeDoneView(auth.views.PasswordChangeDoneView):
+    ...

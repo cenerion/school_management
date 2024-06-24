@@ -1,4 +1,8 @@
+{% extends "base.html" %}
 
+{% block title %}Grade Change{% endblock title %}
+
+{% block content %}
 <a href="{% url 'teacher:grade list' pk=s_pk %}">Return</a>
 
 <form method="post">
@@ -6,3 +10,4 @@
     {{ form.as_p }}
     <input type="submit" value="Save">
 </form>
+{% endblock content %}

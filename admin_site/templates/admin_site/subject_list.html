@@ -1,21 +1,25 @@
-{% extends "base_generic.html" %}
+{% extends "base.html" %}
 
 {% block title %}Subject list{% endblock %}
 
 {% block content %}
 <a href="{% url 'administrator:main' %}">Return</a>
 <a href="{% url 'administrator:subject new' %}">Add new subject</a>
-<table>
-    <tr>
-        <th>Name</th>
-        <th colspan="2">Options</th>
-    </tr>
-{% for subj in subject_list %}
-    <tr>
-        <td>{{subj.name}}</td>
-        <td><a href="{% url 'administrator:subject mod' pk=subj.id %}">Edit</a></td>
-        <td><a href="{% url 'administrator:subject del' pk=subj.id %}">Delete</a></td>
-    </tr>
-{% endfor %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th colspan="2">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for subj in subject_list %}
+        <tr>
+            <td>{{subj.name}}</td>
+            <td><a href="{% url 'administrator:subject mod' pk=subj.id %}">Edit</a></td>
+            <td><a href="{% url 'administrator:subject del' pk=subj.id %}">Delete</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

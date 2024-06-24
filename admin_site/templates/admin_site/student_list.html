@@ -1,31 +1,36 @@
-{% extends "base_generic.html" %}
+{% extends "base.html" %}
 
 {% block title %}Student list{% endblock %}
 
 {% block content %}
 <a href="{% url 'administrator:class list'%}">Return</a>
 <a href="{% url 'administrator:student new' c_pk=c_pk %}">Add new Student</a>
-<table>
-    <tr>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Birth date</th>
-        <th>Gender</th>
-        <th>Class</th>
-        <th>Address</th>
-        <th colspan="2">Options</th>
-    </tr>
-{% for stud in students %}
-    <tr>
-        <td>{{stud.first_name}}</td>
-        <td>{{stud.last_name}}</td>
-        <td>{{stud.birth_date}}</td>
-        <td>{{stud.gender}}</td>
-        <td>{{stud.sclass}}</td>
-        <td>{{stud.address}}</td>
-        <td><a href="{% url 'administrator:student mod' pk=stud.id c_pk=c_pk %}">Edit</a></td>
-        <td><a href="{% url 'administrator:student del' pk=stud.id c_pk=c_pk %}">Delete</a></td>
-    </tr>
-{% endfor %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Gender</th>
+            <th>Birth date</th>
+            <th>Address</th>
+            <th>Class</th>
+            <th colspan="3">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for stud in students %}
+        <tr>
+            <td>{{stud.first_name}}</td>
+            <td>{{stud.last_name}}</td>
+            <td>{{stud.gender}}</td>
+            <td>{{stud.birth_date}}</td>
+            <td>{{stud.address}}</td>
+            <td>{{stud.sclass}}</td>
+            <td><a href="{% url 'administrator:student cred' pk=stud.id c_pk=c_pk %}">Generate new password</a></td>
+            <td><a href="{% url 'administrator:student mod' pk=stud.id c_pk=c_pk %}">Edit</a></td>
+            <td><a href="{% url 'administrator:student del' pk=stud.id c_pk=c_pk %}">Delete</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

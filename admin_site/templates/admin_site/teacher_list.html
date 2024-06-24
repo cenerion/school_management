@@ -1,27 +1,32 @@
-{% extends "base_generic.html" %}
+{% extends "base.html" %}
 
 {% block title %}Teacher list{% endblock %}
 
 {% block content %}
 <a href="{% url 'administrator:main' %}">Return</a>
 <a href="{% url 'administrator:teacher new' %}">Add teacher</a>
-<table>
-    <tr>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Birth date</th>
-        <th>Gender</th>
-        <th colspan="2">Options</th>
-    </tr>
-{% for teach in teacher_list %}
-    <tr>
-        <td>{{teach.first_name}}</td>
-        <td>{{teach.last_name}}</td>
-        <td>{{teach.birth_date}}</td>
-        <td>{{teach.gender}}</td>
-        <td><a href="{% url 'administrator:teacher mod' pk=teach.id %}">Edit</a></td>
-        <td><a href="{% url 'administrator:teacher del' pk=teach.id %}">Delete</a></td>
-    </tr>
-{% endfor %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Birth date</th>
+            <th>Gender</th>
+            <th colspan="2">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for teach in teacher_list %}
+        <tr>
+            <td>{{teach.first_name}}</td>
+            <td>{{teach.last_name}}</td>
+            <td>{{teach.birth_date}}</td>
+            <td>{{teach.gender}}</td>
+            <td><a href="{% url 'administrator:teacher cred' pk=teach.id %}">Generate new password</a></td>
+            <td><a href="{% url 'administrator:teacher mod' pk=teach.id %}">Edit</a></td>
+            <td><a href="{% url 'administrator:teacher del' pk=teach.id %}">Delete</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

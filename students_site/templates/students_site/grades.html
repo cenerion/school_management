@@ -1,20 +1,28 @@
+{% extends "base.html" %}
 
+{% block title %}My grades{% endblock title %}
+
+{% block content %}
+<h1>My grades</h1>
 <a href="{% url 'student:main' %}">Return</a>
-<table>
-    <tr>
-        <th>Teacher</th>
-        <th>Subject</th>
-        <th>Value</th>
-        <th>Date</th>
-        <th>Name</th>
-    </tr>
-    {% for grade in grades %}
-    <tr>
-        <td>{{ grade.teacher }}</td>
-        <td>{{ grade.subject }}</td>
-        <td>{{ grade.value }}</td>
-        <td>{{ grade.date }}</td>
-        <td>{{ grade.name }}</td>
-    </tr>
-    {% endfor %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Date</th>
+            <th>Subject</th>
+            <th>Teacher</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grade in grades %}
+        <tr>
+            <td>{{ grade.name }}</td>
+            <td>{{ grade.value }}</td>
+            <td>{{ grade.date }}</td>
+            <td>{{ grade.subject }}</td>
+            <td>{{ grade.teacher }}</td>
+    </tbody>
 </table>
+{% endblock content %}

@@ -1,10 +1,32 @@
+{% extends "base.html" %}
 
+{% block title %}Class {{class.symbol}}{% endblock title %}
+
+{% block content %}
+<h1>Students from class {{class.symbol}}</h1>
 <a href="{% url 'teacher:class list' %}">Return</a>
-<table>
-    {% for stud in students %}
-    <tr>
-        <td>{{ stud }}</td>
-        <td><a href="{% url "teacher:grade list" pk=stud.pk %}">Grades</a></td>
-    </tr>
-    {% endfor %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Gender</th>
+            <th>Birth date</th>
+            <th>Address</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for stud in students %}
+        <tr>
+            <td>{{ stud.first_name }}</td>
+            <td>{{ stud.last_name }}</td>
+            <td>{{ stud.gender }}</td>
+            <td>{{ stud.birth_date }}</td>
+            <td>{{ stud.address }}</td>
+            <td><a href="{% url "teacher:grade list" pk=stud.pk %}">Grades</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+{% endblock content %}

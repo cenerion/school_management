@@ -1,13 +1,33 @@
+{% extends "base.html" %}
 
+{% block title %}Grade list{% endblock title %}
 
-
-<a href="{% url 'teacher:student list' pk=c_pk %}">Return</a>
-<a href="{% url 'teacher:grade new' pk=s_pk %}">Add Grade</a>
-<table>
-    {% for grade in grades %}
-    <tr>
-        <td>{{ grade }}</td>
-        <td><a href="{% url "teacher:grade mod" pk=grade.pk s_pk=grade.student.pk %}">change grade</a></td>
-    </tr>
-    {% endfor %}
+{% block content %}
+<h1>Grades of {{ student.first_name }} {{ student.last_name }}</h1>
+<a href="{% url 'teacher:student list' pk=student.sclass.pk %}">Return</a>
+<a href="{% url 'teacher:grade new' pk=student.pk %}">Add Grade</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Date</th>
+            <th>Subject</th>
+            <th>Teacher</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grade in grades %}
+        <tr>
+            <td>{{ grade.name }}</td>
+            <td>{{ grade.value }}</td>
+            <td>{{ grade.date }}</td>
+            <td>{{ grade.subject }}</td>
+            <td>{{ grade.teacher }}</td>
+            <td><a href="{% url "teacher:grade mod" pk=grade.pk s_pk=grade.student.pk %}">change grade</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+{% endblock content %}

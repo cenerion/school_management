@@ -1,9 +1,28 @@
+{% extends "base.html" %}
 
-<table>
-{% for class in class_list %}
-<tr>
-    <td>{{ class }}</td>
-    <td><a href="{% url "teacher:student list" pk=class.pk %}">View Students</a></td>
-</tr>
-{% endfor %}
+{% block title %}Class list{% endblock title %}
+
+{% block content %}
+<h1>List of classes</h1>
+<a href="{% url 'teacher:main'%}">Return</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Symbol</th>
+            <th>Profile</th>
+            <th>Teacher</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for class in class_list %}
+        <tr>
+            <td>{{ class.symbol }}</td>
+            <td>{{ class.profile }}</td>
+            <td>{{ class.teacher }}</td>
+            <td><a href="{% url "teacher:student list" pk=class.pk %}">View Students</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+{% endblock content %}

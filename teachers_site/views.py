@@ -1,7 +1,8 @@
+from typing import Any
 from django.forms import BaseModelForm
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
 from django.views import View
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, TemplateView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import AccessMixin
 from django.db.models.query import QuerySet
@@ -34,9 +35,10 @@ class TeacherGenericMixin(AccessMixin):
         return HttpResponseRedirect(reverse_lazy('index'))
 
 
-class TeacherMainView(TeacherGenericMixin, View):
-    def get(self, request):
-        return HttpResponseRedirect(reverse_lazy('teacher:class list'))
+class TeacherMainView(TeacherGenericMixin, TemplateView):
+    template_name = 'teachers_site/main.html'
+    #def get(self, request):
+    #    return HttpResponseRedirect(reverse_lazy('teacher:class list'))
 
 
 class ClassListView(TeacherGenericMixin, ListView):
@@ -49,6 +51,12 @@ class ClassStudentListView(TeacherGenericMixin, ListView):
     model=Student
     context_object_name = 'students'
     template_name = 'teachers_site/students.html'
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["class"] = SClass.objects.get(pk=self.kwargs.get('pk'))
+        return context
+    
 
     def get_queryset(self) -> QuerySet[Student]:
         queryset = super().get_queryset()
@@ -78,8 +86,7 @@ class StudentGradesListview(TeacherGenericMixin, ListView):
 
     def get_context_data(self, **kwargs) -> dict[str, any]:
         context = super().get_context_data(**kwargs)
-        context['s_pk'] = self.kwargs.get('pk')
-        context['c_pk'] = Student.objects.get(pk=self.kwargs.get('pk')).sclass.pk
+        context['student'] = Student.objects.get(pk=self.kwargs.get('pk'))
         return context
 
     def get_queryset(self) -> QuerySet[Grade]:
