@@ -25,7 +25,7 @@ class UserConnect(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=False)
     utype = models.IntegerField(choices=USER_TYPE, default=NONE, null=False)
-    other_id = models.BigIntegerField()
+    other_id = models.BigIntegerField(blank=True)
 
     def __str__(self) -> str:
         ret: str = f'{self.user} {self.utype} '
